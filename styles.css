@@ -6,5 +6,32 @@ body {
 
 #app {
   width: 100%;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
+  height: 100vh;
+}
+
+/* Estilos para el panel de control */
+#map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#map-controls button {
+  display: block;
+  margin: 5px 0;
+  padding: 8px 12px;
+  background: #0078a8;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#map-controls button:hover {
+  background: #005f87;
 }

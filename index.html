@@ -9,7 +9,16 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Panel de control para mapas base -->
+  <div id="map-controls">
+    <button id="osm-button">OpenStreetMap</button>
+    <button id="satellite-button">Satélite</button>
+    <button id="terrain-button">Terreno</button>
+  </div>
+
+  <!-- Contenedor del mapa -->
   <div id="app"></div>
+
   <!-- Incluir Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
