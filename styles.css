@@ -9,29 +9,20 @@ body {
   height: 100vh;
 }
 
-/* Estilos para el panel de control */
-#map-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
+/* Estilos para el panel de capas */
+.leaflet-control-layers {
   background: white;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-#map-controls button {
+.leaflet-control-layers label {
   display: block;
   margin: 5px 0;
-  padding: 8px 12px;
-  background: #0078a8;
-  color: white;
-  border: none;
-  border-radius: 3px;
   cursor: pointer;
 }
 
-#map-controls button:hover {
-  background: #005f87;
+.leaflet-control-layers input[type="radio"] {
+  margin-right: 5px;
 }
