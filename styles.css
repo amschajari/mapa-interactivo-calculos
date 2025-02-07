@@ -62,4 +62,18 @@ body {
   background: #0078a8;
   color: white;
   border: none;
-  border-radius:
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#search-button:hover {
+  background: #005f87;
+}
+
+#map {
+  width: 1110px;
+  height: 600px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
