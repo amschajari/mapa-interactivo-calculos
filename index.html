@@ -6,6 +6,9 @@
   <title>Mapa Interactivo</title>
   <!-- Incluir Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet.draw -->  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+
   <!-- Incluir estilos personalizados -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -19,6 +22,9 @@
     <div id="buttons">
       <button id="clear-markers">Limpiar marcadores</button>
       <button id="edit">Editar</button>
+      <button id="draw-polyline">Dibujar Línea</button>
+      <button id="draw-polygon">Dibujar Polígono</button>
+      <button id="draw-marker">Dibujar Marcador</button>
       <button id="calculate-area">Calcular área</button>
       <button id="calculate-distance">Calcular distancia</button>
       <button id="calculate-coordinates">Calcular coordenadas</button>
@@ -37,6 +43,10 @@
 
   <!-- Incluir Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet.draw -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>  
+  <!-- Leaflet.GeometryUtil -->
+  <script src="https://unpkg.com/leaflet-geometryutil"></script>
   <!-- Incluir script principal -->
   <script src="script.js"></script>
 </body>
