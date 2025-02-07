@@ -44,7 +44,9 @@ map.on(L.Draw.Event.CREATED, function (e) {
         layer = e.layer;
 
     if (type === 'marker') {
-      layer.bindPopup('Un marcador!');
+      const lat = layer.getLatLng().lat.toFixed(6);
+      const lng = layer.getLatLng().lng.toFixed(6);
+      layer.bindPopup(`Coordenadas: ${lat}, ${lng}`);
     }
 
   drawnItems.addLayer(layer);
@@ -125,67 +127,92 @@ document.getElementById('draw-polyline').addEventListener('click', () => {
 
   // Función para calcular y mostrar el área
   function calculateArea() {
+    // Deshabilitar otros modos de dibujo
+    disableDrawModes();
+     new L.Draw.Polygon(map, drawControl.options.polygon).enable();
+     map.once('draw:created', function (e) {
+        const layer = e.layer;
+        const area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+        const km2 = (area / 1000000).toFixed(2);
+        const m2 = area.toFixed(2);
+        const center = layer.getBounds().getCenter();
+        let popupContent = '';
 
-    let area = 0;
-    if (drawnItems.getLayers().length > 0) {
-      drawnItems.eachLayer(function (layer) {
-        if (layer instanceof L.Polygon) {
-          area += L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+        if (area >= 1000000) {
+            popupContent = `Área: ${km2} km²`;
+        } else {
+            popupContent = `Área: ${m2} m²`;
         }
-      });
 
-      area = (area / 1000000).toFixed(2); // Convertir a km² y redondear a 2 decimales
-       alert(`Área total: ${area} km²`);
-    } else {
-      alert('Dibuje un polígono para calcular el área.');
-    }
+        L.popup({closeOnClick: false, autoClose: false})
+            .setLatLng(center)
+            .setContent(popupContent)
+            .openOn(map);
+
+          drawnItems.addLayer(layer);
+    });
   }
 
   // Función para calcular distancia
   function calculateDistance() {
-    if(drawnItems.getLayers().length > 0) {
-      let distance = 0;
-      drawnItems.eachLayer(function(layer) {
-          if(layer instanceof L.Polyline) {
-            distance += L.GeometryUtil.length(layer);
-          }
-      });
+    // Deshabilitar otros modos de dibujo
+    disableDrawModes();
 
-      distance = (distance / 1000).toFixed(2);
-      alert(`Distancia total:  ${distance} km`);
+    new L.Draw.Polyline(map, drawControl.options.polyline).enable();
 
-    } else {
-      alert('Dibuje una línea para calcular la distancia.');
-    }
+    map.once('draw:created', function (e) {
+        const layer = e.layer;
+        const distance = L.GeometryUtil.length(layer);
+        const km = (distance / 1000).toFixed(2);
+        const m = distance.toFixed(2);
+        const latlngs = layer.getLatLngs();
+        const centerIndex = Math.floor(latlngs.length / 2);
+        const center = latlngs[centerIndex];
+        let popupContent = '';
+
+        if (distance >= 1000) {
+            popupContent = `Distancia: ${km} km`;
+        } else {
+            popupContent = `Distancia: ${m} m`;
+        }
+
+        L.popup({closeOnClick: false, autoClose: false})
+            .setLatLng(center)
+            .setContent(popupContent)
+            .openOn(map);
+
+          drawnItems.addLayer(layer);
+    });
   }
 
     // Función para calcular coordenadas
     function calculateCoordinates() {
-    if (drawnItems.getLayers().length > 0) {
-      let coordinates = "";
-          drawnItems.eachLayer(function (layer) {
-            if(layer instanceof L.Marker){
-            coordinates += `Latitud: ${layer.getLatLng().lat.toFixed(6)}, Longitud: ${layer.getLatLng().lng.toFixed(6)} \n`;
-            } else if (layer instanceof L.Polyline || layer instanceof L.Polygon) {
-              const latlngs = layer.getLatLngs();
-                  if (Array.isArray(latlngs) && latlngs.length > 0) {
-                      latlngs.forEach(latlng => {
-                        if (Array.isArray(latlng)) { // Verificar si es un polígono
-                          latlng.forEach(point => coordinates += `Latitud: ${point.lat.toFixed(6)}, Longitud: ${point.lng.toFixed(6)}\n`);
-                        } else {
-                          coordinates += `Latitud: ${latlng.lat.toFixed(6)}, Longitud: ${latlng.lng.toFixed(6)}\n`;
-                        }
-                      });
-                    } else {
-                      alert('No se pudieron obtener coordenadas del objeto.');
-                    }
-            }
-          });
-          alert(coordinates); // Mostrar las coordenadas en un alert
-    } else {
-      alert('Dibuje un marcador, una línea o un polígono para obtener coordenadas.');
-    }
+    // Deshabilitar otros modos de dibujo
+    disableDrawModes();
+
+    new L.Draw.Marker(map, drawControl.options.marker).enable();
+
+    map.once('draw:created', function (e) {
+        const layer = e.layer;
+        const lat = layer.getLatLng().lat.toFixed(6);
+        const lng = layer.getLatLng().lng.toFixed(6);
+        layer.bindPopup(`Coordenadas: ${lat}, ${lng}`).openPopup();
+
+      drawnItems.addLayer(layer);
+    });
   }
+
+  // Función para deshabilitar otros modos de dibujo
+function disableDrawModes() {
+    if (map.pm.globalDrawModeEnabled()) {
+        map.pm.disableDraw('polyline');
+        map.pm.disableDraw('polygon');
+        map.pm.disableDraw('marker');
+        map.pm.disableDraw('circle');
+        map.pm.disableDraw('rectangle');
+        map.pm.disableDraw('circlemarker');
+    }
+}
 
   //Asociar eventos a los botones de calculo
   document.getElementById('calculate-area').addEventListener('click', calculateArea);
@@ -225,12 +252,15 @@ async function exportCoordinates() {
   let coordinatesData = []; // Array para almacenar los datos de las coordenadas
   let featureIndex = 1; // Contador para el índice de características
 
+  // Desactivar temporalmente los eventos de dibujo
+    map.off(L.Draw.Event.CREATED);
+
   drawnItems.eachLayer(async function (layer) {
       let featureType = '';
       let latlngs = [];
 
       if (layer instanceof L.Marker) {
-          featureType = 'Marcador';
+          featureType = 'Punto';
           latlngs = [layer.getLatLng()];
       } else if (layer instanceof L.Polyline) {
           featureType = 'Línea';
@@ -286,6 +316,20 @@ async function exportCoordinates() {
       // Asignar eventos a los botones de descarga
       document.getElementById('download-csv').onclick = () => downloadCsv(coordinatesData);
       document.getElementById('download-geojson').onclick = () => downloadGeoJson(geoJsonData);
+
+            // Reactivar los eventos de dibujo después de generar la tabla
+            map.on(L.Draw.Event.CREATED, function (e) {
+                var type = e.layerType,
+                    layer = e.layer;
+
+                if (type === 'marker') {
+                    const lat = layer.getLatLng().lat.toFixed(6);
+                    const lng = layer.getLatLng().lng.toFixed(6);
+                    layer.bindPopup(`Coordenadas: ${lat}, ${lng}`);
+                }
+
+                drawnItems.addLayer(layer);
+            });
   }, 1000); // Ajusta el tiempo de espera según sea necesario
 }
 
@@ -371,7 +415,7 @@ function downloadCsv(data) {
           let value = item[header];
           // Encerrar los valores en comillas dobles si contienen comas
           if (typeof value === 'string' && value.includes(',')) {
-              value = `"${value}"`;
+              value = `"${value}"}`;
           }
           return value;
       });
