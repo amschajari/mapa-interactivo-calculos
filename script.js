@@ -8,7 +8,7 @@ const baseLayers = {
   }),
   "Satélite": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: '© Esri'
-  })
+  }).addTo(map);
 };
 
 // Añadir la capa base inicial (OpenStreetMap)
