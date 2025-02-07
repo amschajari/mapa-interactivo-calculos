@@ -83,18 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // Asignar la función de búsqueda al botón
       document.getElementById('search-button').addEventListener('click', searchLocation);
 
-      //Asociar eventos a los botones
-    document.getElementById('draw-polyline').addEventListener('click', () => {
-        new L.Draw.Polyline(map, drawControl.options.polyline).enable();
-     });
-     document.getElementById('draw-polygon').addEventListener('click', () => {
-         new L.Draw.Polygon(map, drawControl.options.polygon).enable();
-     });
-     document.getElementById('draw-marker').addEventListener('click', () => {
-         new L.Draw.Marker(map, drawControl.options.marker).enable();
-     });
-
-
      //Funcionalidad del Boton Editar
      document.getElementById('edit').addEventListener('click', function() {
         map.on('draw:created', function(event) {
