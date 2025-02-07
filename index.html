@@ -6,9 +6,8 @@
   <title>Mapa Interactivo</title>
   <!-- Incluir Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet.draw -->  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-
+  <!-- Leaflet.draw -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
   <!-- Incluir estilos personalizados -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -26,6 +25,7 @@
       <button id="calculate-distance">Calcular distancia</button>
       <button id="calculate-coordinates">Calcular coordenadas</button>
       <button id="export-coordinates">Exportar coordenadas</button>
+      <button id="locate-user">Localizarme (GPS)</button> <!-- Botón de Geolocalización -->
     </div>
 
     <!-- Campo de búsqueda -->
@@ -38,12 +38,45 @@
   <!-- Contenedor del mapa -->
   <div id="map"></div>
 
+  <!-- Modal para la tabla de coordenadas -->
+  <div id="coordinates-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">×</span>
+      <h2>Tabla de Coordenadas</h2>
+      <div id="coordinates-table-container">
+        <table id="coordinates-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tipo</th>
+              <th>Vértice</th>
+              <th>Latitud</th>
+              <th>Longitud</th>
+              <th>Elevación (m)</th>
+              <th>UTMX (m)</th>
+              <th>UTMY (m)</th>
+              <th>Zona UTM</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-buttons">
+        <button id="download-csv">Descargar CSV</button>
+        <button id="download-geojson">Descargar GeoJSON</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Incluir Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Leaflet.draw -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
   <!-- Leaflet.GeometryUtil -->
   <script src="https://unpkg.com/leaflet-geometryutil"></script>
+  <!-- UTM -->
+  <script src="https://unpkg.com/utm@4.5.0/dist/utm.js"></script> <!-- Añadida la librería UTM -->
   <!-- Incluir script principal -->
   <script src="script.js"></script>
 </body>
