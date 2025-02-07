@@ -6,15 +6,38 @@
   <title>Mapa Interactivo</title>
   <!-- Incluir Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Incluir Leaflet Layers Control CSS (opcional, para estilos personalizados) -->
+  <!-- Incluir estilos personalizados -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Panel de controles (búsqueda y botones) -->
+  <div id="controls">
+    <h1>Calcula Distancia, Área y Coordenadas en Línea</h1>
+    <p>Calcula rápidamente distancias, áreas y coordenadas UTM de tus proyectos. Exporta la tabla de resultados en formato CSV o GeoJSON.</p>
+
+    <!-- Botones de acción -->
+    <div id="buttons">
+      <button id="clear-markers">Limpiar marcadores</button>
+      <button id="edit">Editar</button>
+      <button id="calculate-area">Calcular área</button>
+      <button id="calculate-distance">Calcular distancia</button>
+      <button id="calculate-coordinates">Calcular coordenadas</button>
+      <button id="export-coordinates">Exportar coordenadas</button>
+    </div>
+
+    <!-- Campo de búsqueda -->
+    <div id="search">
+      <input type="text" id="search-input" placeholder="Buscar ciudad o lugar...">
+      <button id="search-button">Buscar</button>
+    </div>
+  </div>
+
   <!-- Contenedor del mapa -->
-  <div id="app"></div>
+  <div id="map"></div>
 
   <!-- Incluir Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Incluir script principal -->
   <script src="script.js"></script>
 </body>
 </html>

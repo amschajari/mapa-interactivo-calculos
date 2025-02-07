@@ -2,27 +2,64 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#app {
-  width: 100%;
-  height: 100vh;
+#controls {
+  width: 1110px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para el panel de capas */
-.leaflet-control-layers {
-  background: white;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+#controls h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
 }
 
-.leaflet-control-layers label {
-  display: block;
-  margin: 5px 0;
+#controls p {
+  margin: 10px 0;
+  color: #666;
+}
+
+#buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#buttons button {
+  padding: 8px 12px;
+  background: #0078a8;
+  color: white;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.leaflet-control-layers input[type="radio"] {
-  margin-right: 5px;
+#buttons button:hover {
+  background: #005f87;
 }
+
+#search {
+  display: flex;
+  gap: 10px;
+}
+
+#search-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+#search-button {
+  padding: 8px 12px;
+  background: #0078a8;
+  color: white;
+  border: none;
+  border-radius:
