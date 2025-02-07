@@ -1,5 +1,5 @@
 // Inicializar el mapa con OpenStreetMap como capa base
-const map = L.map('map').setView([-34.6037, -58.3816], 13);
+const map = L.map('map').setView([-34.6037, -58.3816], 13); // Coordenadas de Buenos Aires
 
 // Definir las capas base
 const baseLayers = {
@@ -15,7 +15,9 @@ const baseLayers = {
 baseLayers["OpenStreetMap"].addTo(map);
 
 // Crear el control de capas
-const layerControl = L.control.layers(baseLayers, null, { collapsed: true }).addTo(map);
+const layerControl = L.control.layers(baseLayers, null, {
+  collapsed: true // Panel colapsado
+}).addTo(map);
 
 // Función para buscar una ubicación
 const searchLocation = async () => {
@@ -28,8 +30,8 @@ const searchLocation = async () => {
 
     if (data.length > 0) {
       const { lat, lon } = data[0];
-      map.setView([lat, lon], 13);
-      
+      map.setView([lat, lon], 13); // Centrar el mapa en la ubicación buscada
+
       // Agregar un marcador en la ubicación buscada
       L.marker([lat, lon]).addTo(map)
         .bindPopup(`Ubicación: ${query}`)
@@ -45,46 +47,3 @@ const searchLocation = async () => {
 
 // Asignar la función de búsqueda al botón
 document.getElementById('search-button').addEventListener('click', searchLocation);
-
-// Agregar herramientas de medición y dibujo con Leaflet.draw
-const drawnItems = new L.FeatureGroup();
-map.addLayer(drawnItems);
-
-const drawControl = new L.Control.Draw({
-  edit: {
-    featureGroup: drawnItems,
-    remove: true
-  },
-  draw: {
-    polygon: true,
-    polyline: true,
-    rectangle: false,
-    circle: false,
-    marker: true
-  }
-});
-map.addControl(drawControl);
-
-map.on(L.Draw.Event.CREATED, function (event) {
-  const layer = event.layer;
-  drawnItems.addLayer(layer);
-});
-
-// Exportar coordenadas a CSV
-const exportCoordinates = () => {
-  let csvContent = "Latitude,Longitude\n";
-  drawnItems.eachLayer(layer => {
-    if (layer instanceof L.Marker) {
-      const { lat, lng } = layer.getLatLng();
-      csvContent += `${lat},${lng}\n`;
-    }
-  });
-
-  const blob = new Blob([csvContent], { type: 'text/csv' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'coordenadas.csv';
-  link.click();
-};
-
-document.getElementById('export-coordinates').addEventListener('click', exportCoordinates);
