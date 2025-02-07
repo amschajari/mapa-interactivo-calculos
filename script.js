@@ -391,8 +391,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   type: item.type,
                   vertex: item.vertex,
                   elevation: item.elevation,
-                  utmX: item.utmX,
-                  utmY: item.utmY,
+                  utmX: utm.UTMX,
+                  utmY: utm.UTMY,
                   utmZone: item.utmZone
               }
           };
