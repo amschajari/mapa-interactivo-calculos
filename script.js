@@ -238,6 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para exportar las coordenadas a una tabla y permitir la descarga en CSV y GeoJSON
     async function exportCoordinates() {
+      console.log("1. exportCoordinates: Iniciando función"); // <-- AÑADIDO
+
       let coordinatesData = []; // Array para almacenar los datos de las coordenadas
       let featureIndex = 1; // Contador para el índice de características
 
@@ -260,6 +262,8 @@ document.addEventListener('DOMContentLoaded', function() {
               // Cerrar el polígono añadiendo el primer punto al final
               latlngs.push(latlngs[0]);
           }
+
+        console.log("2. exportCoordinates: Procesando capa:", featureType); // <-- AÑADIDO
 
           // Iterar sobre cada conjunto de coordenadas (vértices)
           for (let i = 0; i < latlngs.length; i++) {
@@ -287,22 +291,33 @@ document.addEventListener('DOMContentLoaded', function() {
               };
 
               coordinatesData.push(coordinate);
+              console.log("3. exportCoordinates: Datos de vértice:", coordinate); // <-- AÑADIDO
           }
-          featureIndex++; // Incrementamos el índice después de procesar cada característica
+          featureIndex++; // Incrementamos el índice después de procesar cada característica.
+          console.log("4. exportCoordinates: FeatureIndex: ", featureIndex)
       });
 
       // Esperar a que todas las elevaciones se obtengan y la tabla se cree
+        console.log("5. exportCoordinates: Antes de setTimeout"); // <-- AÑADIDO
       setTimeout(() => {
+        console.log("6. exportCoordinates: Dentro de setTimeout"); // <-- AÑADIDO
            //Generar la tabla HTML
-          const tableHtml = generateTableHtml(coordinatesData);
+           const tableHtml = generateTableHtml(coordinatesData);
+           console.log("7. exportCoordinates: tableHtml:", tableHtml); // <-- AÑADIDO
           document.getElementById('coordinates-table-container').innerHTML = tableHtml;
 
           // Mostrar el modal
           document.getElementById('coordinates-modal').style.display = 'block';
 
           // Asignar eventos a los botones de descarga
-          document.getElementById('download-csv').onclick = () => downloadCsv(coordinatesData);
-          document.getElementById('download-geojson').onclick = () => downloadGeoJson(generateGeoJson(coordinatesData));
+          document.getElementById('download-csv').onclick = () => { // <-- MODIFICADO
+            console.log("8. exportCoordinates: Clic en download-csv"); // <-- AÑADIDO
+            downloadCsv(coordinatesData);
+          }
+          document.getElementById('download-geojson').onclick = () => {// <-- MODIFICADO
+            console.log("9. exportCoordinates: Clic en download-geojson"); // <-- AÑADIDO
+            downloadGeoJson(generateGeoJson(coordinatesData));
+          }
 
             // Reactivar los eventos de dibujo después de generar la tabla
             map.on(L.Draw.Event.CREATED, function (e) {
@@ -324,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para generar la tabla HTML
     function generateTableHtml(data) {
+        console.log("10. generateTableHTML: data", data); // <-- AÑADIDO
       let tableHtml = `
           <table id="coordinates-table">
               <thead>
