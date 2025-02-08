@@ -15,7 +15,7 @@
   <!-- Panel de controles (búsqueda y botones) -->
   <div id="controls">
     <h1>Calcula Distancia, Área y Coordenadas en Línea</h1>
-    <p>Calcula rápidamente distancias, áreas y coordenadas UTM de tus proyectos. Exporta la tabla de resultados en formato CSV o GeoJSON.</p>
+    <p>Calcula distancias, áreas y coordenadas en tus proyectos. Exporta la tabla de resultados en formato CSV o Kmz</p>
 
     <!-- Botones de acción -->
     <div id="buttons">
@@ -53,9 +53,6 @@
               <th>Latitud</th>
               <th>Longitud</th>
               <th>Elevación (m)</th>
-              <th>UTMX (m)</th>
-              <th>UTMY (m)</th>
-              <th>Zona UTM</th>
             </tr>
           </thead>
           <tbody>
@@ -65,6 +62,7 @@
       <div class="modal-buttons">
         <button id="download-csv">Descargar CSV</button>
         <button id="download-geojson">Descargar GeoJSON</button>
+        <button>Cerrar</button> <!--  Botón de cerrar -->
       </div>
     </div>
   </div>
@@ -76,7 +74,7 @@
   <!-- Leaflet.GeometryUtil -->
   <script src="https://unpkg.com/leaflet-geometryutil"></script>
   <!-- UTM -->
-  <script src="https://cdn.jsdelivr.net/npm/utm@4.5.0/dist/utm.min.js"></script> <!-- Añadida la librería UTM -->
+  <script src="https://cdn.jsdelivr.net/npm/utm@4.5.0/dist/utm.min.js"></script>
   <!-- Incluir script principal -->
   <script src="script.js"></script>
 </body>
