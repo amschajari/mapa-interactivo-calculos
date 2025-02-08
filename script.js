@@ -208,15 +208,15 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('calculate-distance').addEventListener('click', calculateDistance);
       document.getElementById('calculate-coordinates').addEventListener('click', calculateCoordinates);
 
-      // Agrega esta función para hacer la conversion a UTM
-    function utmConverter(latitude, longitude) {
-        const utmResult = utm.fromLatLon(latitude, longitude);
-        return {
-            UTMX: utmResult.easting,
-            UTMY: utmResult.northing,
-            ZonaUTM: utmResult.zoneNum + utmResult.zoneLetter
-        };
-    }
+      // Agrega esta función para hacer la conversion a UTM  <-- ELIMINADA
+    // function utmConverter(latitude, longitude) {
+    //     const utmResult = utm.fromLatLon(latitude, longitude);
+    //     return {
+    //         UTMX: utmResult.easting,
+    //         UTMY: utmResult.northing,
+    //         ZonaUTM: utmResult.zoneNum + utmResult.zoneLetter
+    //     };
+    // }
 
     // Función asíncrona para obtener la elevación
     async function getElevation(latitude, longitude) {
@@ -270,24 +270,25 @@ document.addEventListener('DOMContentLoaded', function() {
               // Obtener la elevación
               const elevation = await getElevation(latitude, longitude);
 
-              // Convertir a UTM
-              const utm = utmConverter(latitude, longitude);
+            //   // Convertir a UTM  <-- ELIMINADO
+            //   const utm = utmConverter(latitude, longitude);
 
               // Crear objeto de datos de coordenadas
               const coordinate = {
-                  index: featureIndex++,
+                  index: featureIndex, // Ya no se incrementa aquí
                   type: featureType,
                   vertex: i + 1,
                   latitude: latitude.toFixed(6),
                   longitude: longitude.toFixed(6),
                   elevation: elevation !== null ? elevation.toFixed(2) : 'N/A',
-                  utmX: utm.UTMX.toFixed(2),
-                  utmY: utm.UTMY.toFixed(2),
-                  utmZone: utm.ZonaUTM
+                //   utmX: utm.UTMX.toFixed(2),  <-- ELIMINADO
+                //   utmY: utm.UTMY.toFixed(2),  <-- ELIMINADO
+                //   utmZone: utm.ZonaUTM       <-- ELIMINADO
               };
 
               coordinatesData.push(coordinate);
           }
+          featureIndex++; // Incrementamos el índice después de procesar cada característica
       });
 
       // Esperar a que todas las elevaciones se obtengan y la tabla se cree
@@ -333,9 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       <th>Latitud</th>
                       <th>Longitud</th>
                       <th>Elevación (m)</th>
-                      <th>UTMX (m)</th>
-                      <th>UTMY (m)</th>
-                      <th>Zona UTM</th>
                   </tr>
               </thead>
               <tbody>
@@ -350,9 +348,6 @@ document.addEventListener('DOMContentLoaded', function() {
                   <td>${item.latitude}</td>
                   <td>${item.longitude}</td>
                   <td>${item.elevation}</td>
-                  <td>${item.utmX}</td>
-                  <td>${item.utmY}</td>
-                  <td>${item.utmZone}</td>
               </tr>
           `;
       });
@@ -379,9 +374,9 @@ document.addEventListener('DOMContentLoaded', function() {
                   type: item.type,
                   vertex: item.vertex,
                   elevation: item.elevation,
-                  utmX: utm.UTMX,
-                  utmY: utm.UTMY,
-                  utmZone: item.utmZone
+                //   utmX: item.utmX,  <-- ELIMINADO
+                //   utmY: item.utmY,  <-- ELIMINADO
+                //   utmZone: item.utmZone  <-- ELIMINADO
               }
           };
       });
@@ -422,7 +417,8 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.removeChild(a);
     }
 
-    // Función para descargar los datos en formato GeoJSON
+    // Función para descargar los datos en formato GeoJSON  <-- CAMBIAR
+   // Función para descargar los datos en formato GeoJSON
     function downloadGeoJson(geoJson) {
       const geoJsonString = JSON.stringify(geoJson, null, 2);
       const blob = new Blob([geoJsonString], { type: 'application/json' });

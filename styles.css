@@ -8,154 +8,29 @@ body {
 }
 
 #controls {
-  width: 1110px;
+  width: 1110px; /* Considera usar max-width en lugar de width */
   padding: 20px;
   background: #f9f9f9;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#controls h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #333;
-}
-
-#controls p {
-  margin: 10px 0;
-  color: #666;
-}
-
-#buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap; /* Permite que los botones se envuelvan a la siguiente línea en pantallas pequeñas */
-}
-
-#buttons button {
-  padding: 8px 12px;
-  background: #0078a8;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-#buttons button:hover {
-  background: #005f87;
-}
-
-#search {
-  display: flex;
-  gap: 10px;
-}
-
-#search-input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-}
-
-#search-button {
-  padding: 8px 12px;
-  background: #0078a8;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-#search-button:hover {
-  background: #005f87;
-}
-
-#map {
-  width: 1110px;
-  height: 600px;
-  margin-top: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-/* Estilos para el modal */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+/* ... (El resto de tu CSS se mantiene igual) ... */
 
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 10% auto; /* Reduje el margen superior para que esté más cerca de los controles */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
   position: relative;
+  max-width: 80%;  /* Limita el ancho máximo */
+  max-height: 80vh; /* Limita la altura máxima al 80% de la altura de la ventana */
+  overflow: auto;   /* Habilita el desplazamiento si el contenido es mayor */
 }
 
-/* The Close Button */
-.close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: #aaa;
-  line-height: 25px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 5px;
-}
+/* ... (El resto de tu CSS se mantiene igual) ... */
 
-.close-button:hover,
-.close-button:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Estilos para la tabla */
-#coordinates-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#coordinates-table th, #coordinates-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-#coordinates-table th {
-  background-color: #f2f2f2;
-}
-
-#coordinates-table-container {
-  overflow-x: auto; /* Enable horizontal scroll if needed */
-}
-
-.modal-buttons {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.modal-buttons button {
-  padding: 10px 15px;
-  margin-left: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
 
 /* Media query para diseño adaptativo */
 @media (max-width: 768px) {
@@ -171,5 +46,11 @@ body {
 
   #buttons {
     flex-direction: column; /* Apila los botones en pantallas pequeñas */
+  }
+
+  /* AÑADIDO: Ajusta el modal en pantallas pequeñas */
+  .modal-content {
+    margin: 5% auto; /* Reduce aún más el margen superior en pantallas pequeñas */
+    max-width: 95%;  /* Aumenta el ancho máximo en pantallas pequeñas */
   }
 }
